@@ -66,7 +66,7 @@ public class ClienteService {
     @Transactional
     public void excluirLogicamente(UUID id) {
         Cliente cliente = buscarPorId(id);
-        cliente.setAtivo("0");
+        cliente.inativar();
         repository.save(cliente);
     }
 }

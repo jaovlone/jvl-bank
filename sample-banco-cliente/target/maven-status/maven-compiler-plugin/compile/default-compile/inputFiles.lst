@@ -1,7 +1,0 @@
-/home/alessandrots/https:/github.com/jaovlone/sistema_banco_v0.1/sample-banco-cliente/src/main/java/br/com/banco/SistemaBancoApplication.java
-/home/alessandrots/https:/github.com/jaovlone/sistema_banco_v0.1/sample-banco-cliente/src/main/java/br/com/banco/cliente/controller/ClienteController.java
-/home/alessandrots/https:/github.com/jaovlone/sistema_banco_v0.1/sample-banco-cliente/src/main/java/br/com/banco/cliente/domain/Cliente.java
-/home/alessandrots/https:/github.com/jaovlone/sistema_banco_v0.1/sample-banco-cliente/src/main/java/br/com/banco/cliente/dto/ClienteRequest.java
-/home/alessandrots/https:/github.com/jaovlone/sistema_banco_v0.1/sample-banco-cliente/src/main/java/br/com/banco/cliente/dto/ClienteResponse.java
-/home/alessandrots/https:/github.com/jaovlone/sistema_banco_v0.1/sample-banco-cliente/src/main/java/br/com/banco/cliente/repository/ClienteRepository.java
-/home/alessandrots/https:/github.com/jaovlone/sistema_banco_v0.1/sample-banco-cliente/src/main/java/br/com/banco/cliente/service/ClienteService.java

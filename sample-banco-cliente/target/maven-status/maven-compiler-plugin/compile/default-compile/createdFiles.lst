@@ -1,6 +1,0 @@
-br/com/banco/cliente/domain/Cliente.class
-br/com/banco/SistemaBancoApplication.class
-br/com/banco/cliente/dto/ClienteRequest.class
-br/com/banco/cliente/service/ClienteService.class
-br/com/banco/cliente/repository/ClienteRepository.class
-br/com/banco/cliente/controller/ClienteController.class

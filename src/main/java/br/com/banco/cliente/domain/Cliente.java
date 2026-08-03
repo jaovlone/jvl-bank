@@ -1,6 +1,12 @@
 package br.com.banco.cliente.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -13,27 +19,36 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 120)
     private String nome;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 11)
     private String cpf;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 150)
     private String email;
 
+    @Column(length = 11)
     private String telefone;
 
-    @Column(name = "data_cadastro", nullable = false)
+    @Column(name = "data_cadastro", nullable = false, updatable = false)
     private LocalDateTime dataCadastro;
 
-    @Column(nullable = false, length = 1)
-    private String ativo;
+    @Column(nullable = false)
+    private boolean ativo;
 
     @PrePersist
     public void prePersist() {
         this.dataCadastro = LocalDateTime.now();
-        this.ativo = "1";
+        this.ativo = true;
+    }
+
+    public void inativar() {
+        this.ativo = false;
+    }
+
+    public void ativar() {
+        this.ativo = true;
     }
 
     public UUID getId() {
@@ -60,13 +75,10 @@ public class Cliente {
         return dataCadastro;
     }
 
-    public String getAtivo() {
+    public boolean isAtivo() {
         return ativo;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -82,9 +94,5 @@ public class Cliente {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
-    }
-
-    public void setAtivo(String ativo) {
-        this.ativo = ativo;
     }
 }

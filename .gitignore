@@ -1,0 +1,39 @@
+# Maven
+target/
+*.jar
+*.war
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Arquivos compactados
+*.zip
+*.rar
+*.tar.gz
+
+# Variáveis e configurações locais
+.env
+application-local.properties
+application-local.yml
