@@ -43,12 +43,13 @@ public class ClienteService {
     @Transactional(readOnly = true)
     public Cliente buscarPorId(UUID id) {
         return repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Cliente não encontrado"));
     }
 
     @Transactional(readOnly = true)
     public List<Cliente> listarAtivos() {
-        return repository.findByAtivo("1");
+        return repository.findByAtivoTrue();
     }
 
     @Transactional

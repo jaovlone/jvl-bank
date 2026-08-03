@@ -17,5 +17,5 @@ public interface ClienteRepository extends JpaRepository<Cliente, UUID> {
 
     boolean existsByEmail(String email);
 
-    List<Cliente> findByAtivo(String ativo);
+    List<Cliente> findByAtivoTrue();
 }
