@@ -1,6 +1,8 @@
 package br.com.banco.cliente.service;
 
+import br.com.banco.cliente.shared.exception.RegraNegocioException;
 import br.com.banco.cliente.domain.Cliente;
+import br.com.banco.cliente.dto.ClienteResponse;
 import br.com.banco.cliente.dto.ClienteRequest;
 import br.com.banco.cliente.repository.ClienteRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,15 +22,13 @@ public class ClienteService {
     }
 
     @Transactional
-    public Cliente cadastrar(ClienteRequest request) {
+    public ClienteResponse cadastrar(ClienteRequest request) {
 
         if (repository.existsByCpf(request.getCpf())) {
-            throw new RuntimeException("CPF já cadastrado");
-        }
+            throw new RegraNegocioException("CPF já cadastrado");        }
 
         if (repository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("E-mail já cadastrado");
-        }
+            throw new RegraNegocioException("E-mail já cadastrado");        }
 
         Cliente cliente = new Cliente();
 
@@ -37,36 +37,61 @@ public class ClienteService {
         cliente.setEmail(request.getEmail());
         cliente.setTelefone(request.getTelefone());
 
-        return repository.save(cliente);
+        Cliente clienteSalvo = repository.save(cliente);
+        return toResponse(clienteSalvo);
     }
 
     @Transactional(readOnly = true)
-    public Cliente buscarPorId(UUID id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
+    public ClienteResponse buscarPorId(UUID id) {
+        Cliente cliente = buscarEntidadePorId(id);
+        return toResponse(cliente);
     }
+
 
     @Transactional(readOnly = true)
-    public List<Cliente> listarAtivos() {
-        return repository.findByAtivo("1");
+    public List<ClienteResponse> listarAtivos() {
+        return repository.findByAtivoTrue()
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
-
     @Transactional
-    public Cliente atualizar(UUID id, ClienteRequest request) {
-        Cliente cliente = buscarPorId(id);
+    public ClienteResponse atualizar(UUID id, ClienteRequest request) {
+        Cliente cliente = buscarEntidadePorId(id);
 
         cliente.setNome(request.getNome());
         cliente.setCpf(request.getCpf());
         cliente.setEmail(request.getEmail());
         cliente.setTelefone(request.getTelefone());
 
-        return repository.save(cliente);
+        Cliente clienteAtualizado = repository.save(cliente);
+
+        return toResponse(clienteAtualizado);
     }
 
     @Transactional
     public void excluirLogicamente(UUID id) {
-        Cliente cliente = buscarPorId(id);
+        Cliente cliente = buscarEntidadePorId(id);
         cliente.inativar();
         repository.save(cliente);
     }
+    private Cliente buscarEntidadePorId(UUID id) {
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Cliente não encontrado"));
+    }
+    private ClienteResponse toResponse(Cliente cliente) {
+        ClienteResponse response = new ClienteResponse();
+
+        response.setId(cliente.getId());
+        response.setNome(cliente.getNome());
+        response.setCpf(cliente.getCpf());
+        response.setEmail(cliente.getEmail());
+        response.setTelefone(cliente.getTelefone());
+        response.setDataCadastro(cliente.getDataCadastro());
+        response.setAtivo(cliente.isAtivo());
+
+        return response;
+    }
+
 }

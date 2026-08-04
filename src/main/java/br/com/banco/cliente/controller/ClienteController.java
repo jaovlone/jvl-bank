@@ -1,7 +1,7 @@
 package br.com.banco.cliente.controller;
 
-import br.com.banco.cliente.domain.Cliente;
 import br.com.banco.cliente.dto.ClienteRequest;
+import br.com.banco.cliente.dto.ClienteResponse;
 import br.com.banco.cliente.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -22,22 +22,24 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente cadastrar(@RequestBody @Valid ClienteRequest request) {
+    public ClienteResponse cadastrar(
+            @RequestBody @Valid ClienteRequest request
+    ) {
         return service.cadastrar(request);
     }
 
     @GetMapping("/{id}")
-    public Cliente buscarPorId(@PathVariable UUID id) {
+    public ClienteResponse buscarPorId(@PathVariable UUID id) {
         return service.buscarPorId(id);
     }
 
     @GetMapping
-    public List<Cliente> listarAtivos() {
+    public List<ClienteResponse> listarAtivos() {
         return service.listarAtivos();
     }
 
     @PutMapping("/{id}")
-    public Cliente atualizar(
+    public ClienteResponse atualizar(
             @PathVariable UUID id,
             @RequestBody @Valid ClienteRequest request
     ) {
