@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/banco
-    username: postgres
-    password: postgres
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/banco}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
 
   jpa:
     show-sql: true
@@ -10,4 +10,4 @@ spring:
       ddl-auto: update
 
   flyway:
-    enabled: true
+    enabled: false
