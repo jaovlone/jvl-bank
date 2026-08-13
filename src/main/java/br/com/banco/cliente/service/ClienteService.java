@@ -1,10 +1,10 @@
 package br.com.banco.cliente.service;
 
-import br.com.banco.cliente.shared.exception.RegraNegocioException;
 import br.com.banco.cliente.domain.Cliente;
-import br.com.banco.cliente.dto.ClienteResponse;
 import br.com.banco.cliente.dto.ClienteRequest;
+import br.com.banco.cliente.dto.ClienteResponse;
 import br.com.banco.cliente.repository.ClienteRepository;
+import br.com.banco.cliente.shared.exception.RegraNegocioException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,10 +25,12 @@ public class ClienteService {
     public ClienteResponse cadastrar(ClienteRequest request) {
 
         if (repository.existsByCpf(request.getCpf())) {
-            throw new RegraNegocioException("CPF já cadastrado");        }
+            throw new RegraNegocioException("CPF já cadastrado");
+        }
 
         if (repository.existsByEmail(request.getEmail())) {
-            throw new RegraNegocioException("E-mail já cadastrado");        }
+            throw new RegraNegocioException("E-mail já cadastrado");
+        }
 
         Cliente cliente = new Cliente();
 
@@ -38,6 +40,7 @@ public class ClienteService {
         cliente.setTelefone(request.getTelefone());
 
         Cliente clienteSalvo = repository.save(cliente);
+
         return toResponse(clienteSalvo);
     }
 
@@ -47,7 +50,6 @@ public class ClienteService {
         return toResponse(cliente);
     }
 
-
     @Transactional(readOnly = true)
     public List<ClienteResponse> listarAtivos() {
         return repository.findByAtivoTrue()
@@ -55,6 +57,7 @@ public class ClienteService {
                 .map(this::toResponse)
                 .toList();
     }
+
     @Transactional
     public ClienteResponse atualizar(UUID id, ClienteRequest request) {
         Cliente cliente = buscarEntidadePorId(id);
@@ -75,11 +78,13 @@ public class ClienteService {
         cliente.inativar();
         repository.save(cliente);
     }
+
     private Cliente buscarEntidadePorId(UUID id) {
         return repository.findById(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException("Cliente não encontrado"));
     }
+
     private ClienteResponse toResponse(Cliente cliente) {
         ClienteResponse response = new ClienteResponse();
 
@@ -93,5 +98,4 @@ public class ClienteService {
 
         return response;
     }
-
 }
