@@ -98,6 +98,3 @@ mvn clean test
 👨‍💻 Autor
 João Victor Braga Santos
 
-GitHub
-
-LinkedIn
