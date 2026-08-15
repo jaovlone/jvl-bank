@@ -46,6 +46,26 @@ public class Conta {
         this.dataAbertura = LocalDateTime.now();
     }
 
+    public void sacar(BigDecimal valor) {
+
+        if (!ativa) {
+            throw new RegraNegocioException("Conta inativa");
+        }
+
+        if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new RegraNegocioException(
+                    "O valor do saque deve ser maior que zero"
+            );
+        }
+
+        if (saldo.compareTo(valor) < 0) {
+            throw new RegraNegocioException("Saldo insuficiente");
+        }
+
+        this.saldo = this.saldo.subtract(valor);
+    }
+
+
     public void depositar(BigDecimal valor) {
 
         if (!ativa) {

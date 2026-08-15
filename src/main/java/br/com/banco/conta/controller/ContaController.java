@@ -1,5 +1,7 @@
 package br.com.banco.conta.controller;
 
+import br.com.banco.conta.dto.TransferenciaRequest;
+import br.com.banco.conta.dto.SaqueRequest;
 import br.com.banco.conta.dto.ContaRequest;
 import br.com.banco.conta.dto.ContaResponse;
 import br.com.banco.conta.dto.DepositoRequest;
@@ -71,4 +73,26 @@ public class ContaController {
     public void inativar(@PathVariable UUID id) {
         service.inativar(id);
     }
+
+    @Operation(summary = "Realizar transferência entre contas")
+    @PostMapping("/{id}/transferencias")
+    public ContaResponse transferir(
+            @PathVariable UUID id,
+            @RequestBody @Valid TransferenciaRequest request
+    ) {
+        return service.transferir(id, request);
+    }
+
+    @Operation(summary = "Realizar saque em uma conta")
+    @PostMapping("/{id}/saques")
+    public ContaResponse sacar(
+            @PathVariable UUID id,
+            @RequestBody @Valid SaqueRequest request
+    ) {
+        return service.sacar(id, request);
+    }
+
+
+
+
 }
