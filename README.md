@@ -1,116 +1,103 @@
-# Sample Banco Cliente
+# 🏦 JVL Bank
 
-Modelo simples para aprendizado com PostgreSQL e futura aplicação em Spring Boot Java.
+Sistema bancário desenvolvido com Java 21 e Spring Boot 3, seguindo boas práticas de arquitetura em camadas, testes automatizados, Docker e documentação OpenAPI.
 
-## Objetivo
+Badges
 
-Simular uma aplicação bancária básica com:
+Java 21
+Spring Boot
+Docker
+PostgreSQL
+GitHub Actions
+Qodana
+License
 
-- Cadastro de cliente
-- Conta corrente
-- Conta poupança
-- Depósito
-- Retirada
-- Consulta de saldo
+## ✨ Funcionalidades
+
+- Cadastro de clientes
+- Atualização de clientes
+- Inativação lógica de clientes
+- Abertura de contas
+- Depósitos
+- Saques
+- Transferências entre contas
+- Histórico de movimentações
 - Consulta de extrato
+- Documentação Swagger
+- Testes automatizados
 
-## Estrutura
+Controller
+     │
+     ▼
+ Service
+     │
+     ▼
+Repository
+     │
+     ▼
+ PostgreSQL
 
-```text
-sample-banco-cliente/
-├── README.md
-├── docs/
-│   └── MER.md
-└── sql/
-    ├── 01_create_schema.sql
-    ├── 02_inserts_iniciais.sql
-    ├── 03_consultas_teste.sql
-    └── 04_simulacoes_deposito_retirada.sql
-```
+Estrutura
 
-## Ordem para executar no PostgreSQL
+src
+ ├── cliente
+ ├── conta
+ ├── movimentacao
+ ├── config
+ └── resources
 
-Execute nesta ordem:
+## 🚀 Tecnologias
 
-```sql
-\i sql/01_create_schema.sql
-\i sql/02_inserts_iniciais.sql
-\i sql/03_consultas_teste.sql
-```
+- Java 21
+- Spring Boot 3
+- Spring Data JPA
+- PostgreSQL
+- Hibernate
+- Maven
+- Docker
+- Docker Compose
+- Flyway
+- OpenAPI / Swagger
+- JUnit 5
+- Mockito
+- GitHub Actions
+- Qodana
 
-Ou, se estiver no DBeaver, abra cada arquivo e execute na ordem:
+⚙️ Como Executar
 
-1. `01_create_schema.sql`
-2. `02_inserts_iniciais.sql`
-3. `03_consultas_teste.sql`
-4. `04_simulacoes_deposito_retirada.sql`, se quiser testar operações direto no banco
+git clone ...
 
-## Endpoints sugeridos para o Spring Boot
+cd JVL-Bank
 
-```text
-POST   /clientes
-GET    /clientes/{id}
-GET    /clientes/{id}/contas
+mvn clean install
 
-POST   /contas
-GET    /contas/{id}
-GET    /contas/{id}/saldo
+mvn spring-boot:run
 
-POST   /contas/{id}/depositos
-POST   /contas/{id}/retiradas
-GET    /contas/{id}/movimentacoes
-```
+🐳 Docker
 
-## Regras de negócio sugeridas
+docker compose up --build
 
-### Cliente
+📖 Swagger
 
-- CPF deve ser único.
-- E-mail deve ser único.
-- Cliente inativo não deve abrir nova conta.
+http://localhost:8080/swagger-ui/index.html
 
-### Conta
+🧪 Testes
 
-- Conta deve pertencer a um cliente existente.
-- Conta pode ser `CORRENTE` ou `POUPANCA`.
-- Conta poupança não possui limite.
-- Conta corrente pode possuir limite.
-- Conta inativa não deve aceitar depósito nem retirada.
+mvn clean test
 
-### Depósito
+📷 Prints
 
-- Valor deve ser maior que zero.
-- Deve atualizar o saldo da conta.
-- Deve gerar movimentação do tipo `DEPOSITO`.
+📌 Próximos Passos
+- JWT
+- Spring Security
+- Redis
+- RabbitMQ
+- Kubernetes
+- Deploy AWS
 
-### Retirada
+👨‍💻 Autor
+João Victor Braga Santos
 
-- Valor deve ser maior que zero.
-- Deve validar saldo disponível.
-- Deve atualizar o saldo da conta.
-- Deve gerar movimentação do tipo `RETIRADA`.
+GitHub
 
-## Sugestão de modelagem Java
-
-```text
-br.com.seuprojeto.banco
-├── cliente
-│   ├── domain
-│   ├── application
-│   ├── infrastructure
-│   └── api
-├── conta
-│   ├── domain
-│   ├── application
-│   ├── infrastructure
-│   └── api
-└── movimentacao
-    ├── domain
-    ├── application
-    ├── infrastructure
-    └── api
-```
-
-## Observação importante
-
-Este modelo é propositalmente simples para aprendizado. Em uma aplicação bancária real, seria necessário tratar concorrência, auditoria, idempotência, trilha de eventos, autorização, autenticação, logs, antifraude, transações distribuídas e várias outras regras.
+LinkedIn
